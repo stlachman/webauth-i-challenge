@@ -1,10 +1,4 @@
-const express = require("express");
-
-const server = express();
-
-server.get("/", (req, res) => {
-  res.status(200).send("It's working");
-});
+const server = require("./server.js");
 
 const port = process.env.PORT || 5000;
 
