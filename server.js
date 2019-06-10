@@ -17,7 +17,7 @@ server.get("/", (req, res) => {
   res.status(200).send("It's working");
 });
 
-server.use("/api/auth", authRouter);
+server.use("/api/", authRouter);
 server.use("/api/users", restricted, usersRouter);
 server.use("/api/restricted", restricted, restrictedRouter);
 
