@@ -9,6 +9,7 @@ const authRouter = require("./auth/auth-router.js");
 const usersRouter = require("./users/users-router.js");
 const restrictedRouter = require("./restricted/restricted-router.js");
 const restricted = require("./auth/restricted.js");
+const KnexSessionStore = require("connect-session-knex")(session);
 
 const sessionConfig = {
   name: "super",
@@ -19,7 +20,14 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 10,
     secure: false,
     httpOnly: true // prevents client JS from accessing cookie
-  }
+  },
+  store: new KnexSessionStore({
+    knex: require("./database/dbConfig.js"),
+    tablename: "sessions",
+    sidfieldname: "sid",
+    createTable: true,
+    clearInterval: 1000 * 60 * 15 // every 15 minutes clear out all expired sessions
+  })
 };
 
 server.use(express.json());
