@@ -40,6 +40,18 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get("/logout", (req, res) => {
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.json({ message: "There was a logging out" });
+      } else {
+        res.json({ message: "Good bye for now!" });
+      }
+    });
+  }
+});
+
 function validateRegistration(req, res, next) {
   const user = req.body;
 
